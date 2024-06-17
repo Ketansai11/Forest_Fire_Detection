@@ -1,30 +1,84 @@
-# Forest Fire Detection using YOLOv9
+# Forest Fire and Smoke Detection using YOLOv9
 
-# Project Overview
-This project utilizes YOLOv9 (You Only Look Once, version 9) to detect forest fires and smoke. YOLOv9 is a cutting-edge object detection model known for its efficiency and accuracy.
+This repository contains a Jupyter Notebook that demonstrates how to use the YOLO-V9 (You Only Look Once, Version 9) model for detecting forest fires and smoke. The notebook includes steps to set up the environment, download necessary datasets and model weights, and perform inference and training using YOLO-V9.
+
+# Table of Contents
+  1. Before You Start
+  2. Clone and Install
+  3. Download Model Weights
+  4. Detection with Pre-trained COCO Model
+  5. Gelan-c
+  6. Yolov9-e
+  7. Authenticate and Download the Dataset
+  8. Train Custom Model
+  9. Examine Training Results
+  10. Validate Custom Model
+  11. Inference with Custom Model
 
 # Before You Start
-Ensure you have access to a GPU to expedite the training and inference process. Checking GPU availability is essential, and you may need to adjust your hardware settings to use a GPU.
+Ensure that you have access to a GPU for faster processing. You can verify GPU access using the `nvidia-smi` command. If needed, navigate to `Edit -> Notebook settings -> Hardware accelerator`, set it to `GPU`, and click `Save`.
 
-# Setup Instructions
-Clone the Repository and Install Dependencies
-YOLOv9 is a new model, and we recommend using a specific fork that includes necessary patches for proper functionality. Clone the repository and install the required dependencies as specified in the setup instructions provided in the repository.
+`!nvidia-smi`
 
-# Install Roboflow
-The roboflow package is used to download datasets from Roboflow Universe. Ensure you have this package installed to manage datasets effectively.
+# Clone and Install
+Clone the YOLO-V9 repository and install the necessary dependencies. Note that we are using a forked version of the repository due to a bug in the original.
+
+`import os`
+
+`HOME = os.getcwd()`
+
+`print(HOME)`
+
+`!git clone https://github.com/SkalskiP/yolov9.git`
+
+`%cd yolov9`
+
+`!pip install -r requirements.txt -q`
+
+`!pip install -q roboflow`
 
 # Download Model Weights
-Download the pre-trained weights for YOLOv9 models. These weights are crucial for running the detection model. Verify that the weights are downloaded to the correct directory.
+Download the pre-trained model weights required for YOLO-V9.
 
-# Download Example Data
-To run inference using example data, download an image from a reliable source. If you prefer to use your own image, upload it to the environment and update the file path accordingly.
+`!wget -P {HOME}/weights -q https://github.com/WongKinYiu/yolov9/releases/download/v0.1/yolov9-c.pt`
 
-# Inference
-Run the model on the example image or your custom input. Follow the instructions provided in the notebook to execute the inference process and obtain detection results.
+`!wget -P {HOME}/weights -q https://github.com/WongKinYiu/yolov9/releases/download/v0.1/yolov9-e.pt`
 
-# Conclusion
-This project demonstrates the use of YOLOv9 for detecting forest fires and smoke. By following the setup instructions and utilizing the provided scripts, you can train and run the model on your own data.
+`!wget -P {HOME}/weights -q https://github.com/WongKinYiu/yolov9/releases/download/v0.1/gelan-c.pt`
 
-For further customization and enhancement, refer to the YOLOv9 documentation and explore additional parameters and configurations.
+`!wget -P {HOME}/weights -q https://github.com/WongKinYiu/yolov9/releases/download/v0.1/gelan-e.pt`
 
-This README file provides an overview of the project, setup instructions, and guidance on running inference using the YOLOv9 model without including specific code snippets. Adjustments can be made based on additional specifics from the notebook or your preferences.
+# Detection with Pre-trained COCO Model
+Use the pre-trained COCO model to perform detection on the example data.
+
+# Gelan-c
+Detailed instructions for configuring Gelan-c.
+
+# Yolov9-e
+Detailed instructions for configuring Yolov9-e.
+
+# Authenticate and Download the Dataset
+Authenticate with Roboflow to download the dataset. Ensure the dataset is saved inside the `{HOME}/yolov9` directory for successful training. The example uses the `forest-fire-dataset` dataset.
+
+`from roboflow import Roboflow`
+
+`rf = Roboflow(api_key="YOUR_API_KEY")`
+
+`project = rf.workspace("roboflow-jvuqo").project("forest-fire-dataset")`
+
+`dataset = project.version(1).download("yolov9")`
+
+# Train Custom Model
+Instructions and commands for training the YOLO-V9 model on the downloaded dataset will be provided in the notebook.
+
+# Examine Training Results
+Analyze the results of your model training.
+
+# Validate Custom Model
+Validate the performance of your custom model on a test dataset.
+
+# Inference with Custom Model
+Run inference using the trained model and visualize the results. If you want to run inference using your own file as input, upload the image to the notebook and update the `SOURCE_IMAGE_PATH` variable with the path to your file.
+
+By default, the results of each inference session are saved in `{HOME}/yolov9/runs/detect/`, in directories named `exp`, `exp2`, `exp3`, etc. You can override this behavior using the `--name parameter`.
+
